@@ -1,0 +1,75 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { site } from '../data/site';
+---
+
+<MainLayout
+  title={`Política de Privacidad | ${site.brand}`}
+  description="Información sobre el tratamiento de datos y contacto en Línea Gas."
+>
+  <section class="py-16 sm:py-20 bg-surface-soft">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      
+      <div class="mb-8">
+        <a
+          href="/#contacto"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-brand-orange-dark transition mb-4"
+        >
+          ← Volver a la página principal
+        </a>
+        <h1 class="font-heading text-3xl font-extrabold text-brand-navy sm:text-4xl">
+          Política de Privacidad
+        </h1>
+        <p class="text-sm text-content-muted mt-2">
+          Última actualización: Noviembre de 2026
+        </p>
+      </div>
+
+      <div class="rounded-2xl bg-white p-8 shadow-sm border border-slate-200 space-y-6 text-sm text-content-muted leading-relaxed">
+        
+        <div>
+          <h2 class="font-heading text-lg font-bold text-brand-navy mb-2">
+            1. Identificación del Responsable
+          </h2>
+          <p>
+            El presente sitio web es un entorno demostrativo para <strong>{site.brand}</strong>. Una vez publicado oficialmente, los datos de contacto y razón social definitiva serán consignados en esta sección conforme a la Ley de Protección de Datos Personales (Ley N° 29733 de la República del Perú).
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-heading text-lg font-bold text-brand-navy mb-2">
+            2. Finalidad del Tratamiento de Datos
+          </h2>
+          <p>
+            Los datos personales facilitados por el usuario mediante los formularios de contacto o canales de mensajería (como nombre, número de teléfono o dirección de correo electrónico) serán utilizados exclusivamente para:
+          </p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Atender solicitudes de cotización o pedidos de balones de gas.</li>
+            <li>Brindar asesoría personalizada sobre marcas y presentaciones disponibles.</li>
+            <li>Coordinar entregas o resolver dudas sobre la cobertura de reparto.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="font-heading text-lg font-bold text-brand-navy mb-2">
+            3. Confidencialidad y Seguridad
+          </h2>
+          <p>
+            {site.brand} se compromete a no comercializar ni ceder información personal a terceros ajenos a la operación de atención al cliente sin el consentimiento expreso del titular.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-heading text-lg font-bold text-brand-navy mb-2">
+            4. Canales para Ejercicio de Derechos ARCO
+          </h2>
+          <p>
+            Cualquier usuario podrá solicitar el acceso, rectificación, cancelación u oposición al tratamiento de sus datos escribiendo al correo oficial: <a href={`mailto:${site.contact.email}`} class="text-brand-navy font-bold underline">{site.contact.email}</a>.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,115 @@
+---
+import WhatsAppIcon from '../common/WhatsAppIcon.astro';
+---
+<dialog
+  id="demo-modal"
+  class="m-auto backdrop:bg-slate-900/60 backdrop:backdrop-blur-sm rounded-2xl p-0 shadow-2xl border border-slate-200 w-[92%] max-w-lg overflow-hidden transition-all duration-300"
+  aria-labelledby="modal-title"
+  aria-describedby="modal-desc"
+>
+  <div class="bg-surface p-6 sm:p-8">
+    <!-- Header Modal -->
+    <div class="flex items-start justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <span class="inline-block rounded-md bg-amber-50 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-amber-800 border border-amber-200">
+            Aviso de Demostración
+          </span>
+          <h3 id="modal-title" class="font-heading text-lg font-bold text-brand-navy mt-1">
+            Canal de contacto en preparación
+          </h3>
+        </div>
+      </div>
+      <button
+        id="close-demo-modal"
+        class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+        aria-label="Cerrar ventana"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div id="modal-desc" class="mt-4 space-y-3 text-sm text-content-muted leading-relaxed">
+      <p id="modal-context-text">
+        Este botón ejecutará la acción directa de contacto oficial una vez se configure el número autorizado por <strong>Línea Gas</strong>.
+      </p>
+      
+      <!-- Detalle simulado del mensaje -->
+      <div id="modal-simulated-box" class="rounded-xl border border-brand-soft bg-surface-soft p-3.5 text-xs text-slate-700">
+        <p class="font-semibold text-brand-navy mb-1 flex items-center gap-1.5">
+          <span class="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#25D366]">
+            <WhatsAppIcon className="h-3 w-3" size={12} />
+          </span>
+          Mensaje preparado para WhatsApp:
+        </p>
+        <p id="modal-simulated-msg" class="italic text-slate-600 pl-5">
+          "Hola Línea Gas, deseo consultar la disponibilidad de balones de 10 kg..."
+        </p>
+      </div>
+
+      <div class="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-blue-900">
+        <strong>Para activar en producción:</strong> Ingrese el número en <code class="font-mono bg-white px-1 py-0.5 rounded border border-blue-300">src/data/site.ts</code> bajo <code class="font-mono bg-white px-1 py-0.5 rounded border border-blue-300">contact.whatsappNumber</code>.
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5">
+      <button
+        id="confirm-demo-modal"
+        type="button"
+        class="w-full sm:w-auto rounded-btn bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white hover:bg-opacity-95 transition"
+      >
+        Entendido
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('demo-modal') as HTMLDialogElement | null;
+  const closeBtn = document.getElementById('close-demo-modal');
+  const confirmBtn = document.getElementById('confirm-demo-modal');
+  const contextText = document.getElementById('modal-context-text');
+  const simulatedMsg = document.getElementById('modal-simulated-msg');
+
+  function openDemoModal(customMessage?: string, context?: string) {
+    if (!dialog) return;
+    if (customMessage && simulatedMsg) {
+      simulatedMsg.textContent = `"${customMessage}"`;
+    }
+    if (context && contextText) {
+      contextText.innerHTML = context;
+    }
+    dialog.showModal();
+  }
+
+  // Interceptar clicks fuera del diálogo para cerrar
+  dialog?.addEventListener('click', (e) => {
+    const rect = dialog.getBoundingClientRect();
+    const isInDialog = (
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width
+    );
+    if (!isInDialog) {
+      dialog.close();
+    }
+  });
+
+  closeBtn?.addEventListener('click', () => dialog?.close());
+  confirmBtn?.addEventListener('click', () => dialog?.close());
+
+  // Escuchar eventos globales disparados desde cualquier botón de demo
+  window.addEventListener('open-demo-dialog', ((e: CustomEvent) => {
+    openDemoModal(e.detail?.message, e.detail?.context);
+  }) as EventListener);
+</script>

@@ -1,0 +1,101 @@
+---
+import WhatsAppIcon from '../common/WhatsAppIcon.astro';
+import { site, getWhatsAppUrl } from '../../data/site';
+
+const defaultMessage = `Hola ${site.brand}, deseo realizar un pedido de gas.`;
+const whatsappUrl = getWhatsAppUrl(defaultMessage);
+// Número a mostrar: si el usuario configuró uno oficial se muestra, si no el del ejemplo (+51 1 6133333)
+const formattedNumber = site.contact.whatsappNumber 
+  ? (site.contact.whatsappNumber.startsWith('51') ? `+${site.contact.whatsappNumber.slice(0, 2)} ${site.contact.whatsappNumber.slice(2)}` : site.contact.whatsappNumber)
+  : "+51 1 6133333";
+---
+
+<!-- Widget Lateral Desplegable de WhatsApp (Optimizada para Desktop y Móviles) -->
+<aside
+  id="floating-whatsapp-widget"
+  class="fixed right-0 top-1/2 -translate-y-1/2 z-40 select-none"
+  aria-label="Atención por WhatsApp"
+>
+  {whatsappUrl ? (
+    <a
+      id="whatsapp-lateral-link"
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="lateral-pill group flex items-center bg-gradient-to-r from-[#32cf1b] via-[#28ba13] to-[#1da50c] text-white rounded-l-full shadow-2xl py-2 sm:py-2.5 pl-3 sm:pl-3.5 pr-6 sm:pr-7 transition-all duration-300 ease-out translate-x-[calc(100%-60px)] sm:translate-x-[calc(100%-66px)] hover:translate-x-0 focus-visible:translate-x-0 cursor-pointer max-w-[calc(100vw-16px)]"
+      aria-label={`Central de pedidos por WhatsApp: ${formattedNumber}`}
+    >
+      <!-- Icono de WhatsApp en círculo -->
+      <div class="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-white/10 ring-2 ring-white/40 group-hover:scale-105 transition-transform">
+        <WhatsAppIcon className="h-7 w-7 sm:h-8 sm:w-8" size={32} />
+      </div>
+
+      <!-- Texto que se despliega al pasar el mouse o al tocar en móvil -->
+      <div class="ml-3 sm:ml-3.5 pr-1 sm:pr-2 text-left whitespace-nowrap">
+        <span class="block text-[11px] sm:text-[13px] font-bold text-white/95 leading-tight tracking-wide drop-shadow-sm">
+          Central de pedidos
+        </span>
+        <span class="block font-heading text-base sm:text-xl font-extrabold text-white tracking-wider leading-none mt-1 drop-shadow-sm">
+          {formattedNumber}
+        </span>
+      </div>
+    </a>
+  ) : (
+    <button
+      id="whatsapp-lateral-btn"
+      type="button"
+      class="btn-demo-action lateral-pill group flex items-center bg-gradient-to-r from-[#32cf1b] via-[#28ba13] to-[#1da50c] text-white rounded-l-full shadow-2xl py-2 sm:py-2.5 pl-3 sm:pl-3.5 pr-6 sm:pr-7 transition-all duration-300 ease-out translate-x-[calc(100%-60px)] sm:translate-x-[calc(100%-66px)] hover:translate-x-0 focus-visible:translate-x-0 cursor-pointer text-left max-w-[calc(100vw-16px)]"
+      data-msg={defaultMessage}
+      data-context={`Central de pedidos WhatsApp (Línea: <strong>${formattedNumber}</strong>).`}
+      aria-label={`Central de pedidos por WhatsApp: ${formattedNumber}`}
+    >
+      <!-- Icono de WhatsApp en círculo -->
+      <div class="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-white/10 ring-2 ring-white/40 group-hover:scale-105 transition-transform">
+        <WhatsAppIcon className="h-7 w-7 sm:h-8 sm:w-8" size={32} />
+      </div>
+
+      <!-- Texto que se despliega al pasar el mouse o al tocar en móvil -->
+      <div class="ml-3 sm:ml-3.5 pr-1 sm:pr-2 text-left whitespace-nowrap">
+        <span class="block text-[11px] sm:text-[13px] font-bold text-white/95 leading-tight tracking-wide drop-shadow-sm">
+          Central de pedidos
+        </span>
+        <span class="block font-heading text-base sm:text-xl font-extrabold text-white tracking-wider leading-none mt-1 drop-shadow-sm">
+          {formattedNumber}
+        </span>
+      </div>
+    </button>
+  )}
+</aside>
+
+<script>
+  // Delegación de eventos para botones con clase .btn-demo-action
+  document.addEventListener('click', (e) => {
+    const target = (e.target as HTMLElement)?.closest('.btn-demo-action') as HTMLElement | null;
+    if (target) {
+      const msg = target.getAttribute('data-msg') || '';
+      const context = target.getAttribute('data-context') || '';
+      window.dispatchEvent(new CustomEvent('open-demo-dialog', {
+        detail: { message: msg, context: context }
+      }));
+    }
+  });
+
+  // Soporte táctil mejorado para dispositivos móviles:
+  const pill = document.querySelector('.lateral-pill');
+  if (pill) {
+    let isOpen = false;
+    pill.addEventListener('touchstart', (e) => {
+      if (!isOpen) {
+        isOpen = true;
+        pill.classList.remove('translate-x-[calc(100%-60px)]', 'sm:translate-x-[calc(100%-66px)]');
+        pill.classList.add('translate-x-0');
+        // Auto repliegue después de 4.5 segundos si el usuario no interactúa más
+        setTimeout(() => {
+          isOpen = false;
+          pill.classList.add('translate-x-[calc(100%-60px)]', 'sm:translate-x-[calc(100%-66px)]');
+          pill.classList.remove('translate-x-0');
+        }, 4500);
+      }
+    }, { passive: true });
+  }
+</script>

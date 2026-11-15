@@ -1,0 +1,99 @@
+---
+import Logo from '../common/Logo.astro';
+import { site } from '../../data/site';
+
+const currentYear = new Date().getFullYear();
+const footerLinks = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Productos', href: '#productos' },
+  { label: 'Quiénes somos', href: '#nosotros' },
+  { label: 'Contacto', href: '#contacto' },
+  { label: 'Política de privacidad', href: '/privacidad' },
+];
+---
+
+<footer class="bg-brand-navy text-white pt-16 pb-12 border-t-4 border-brand-orange-dark">
+  <div class="mx-auto max-w-site px-4 sm:px-6 lg:px-8">
+    
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-indigo-900/60">
+      
+      <!-- Columna 1: Logo, Resumen y Redes Sociales -->
+      <div class="md:col-span-5 space-y-4">
+        <Logo variant="light" size="lg" />
+        <p class="text-sm text-slate-300 max-w-sm leading-relaxed">
+          {site.brand}: Información comercial, variedad de marcas y atención directa para el suministro de gas envasado en presentaciones de 10 kg y 45 kg.
+        </p>
+
+        <!-- Redes Sociales Oficiales -->
+        <div class="pt-2 flex items-center gap-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">
+            Síguenos:
+          </span>
+          <a
+            href="https://www.facebook.com/share/1E2nh4naHH/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-[#1877F2] px-3.5 py-2 text-xs font-bold text-white transition-all duration-200 border border-white/10 hover:border-[#1877F2] shadow-xs hover:scale-[1.02] active:scale-95 cursor-pointer"
+            aria-label="Página oficial de Línea Gas en Facebook"
+          >
+            <img src="/images/facebook.svg" alt="Facebook" class="h-4 w-4 brightness-0 invert" width="16" height="16" />
+            <span>Facebook Oficial</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna 2: Enlaces Rápidos -->
+      <div class="md:col-span-3 space-y-3">
+        <h4 class="font-heading text-sm font-bold uppercase tracking-wider text-white">
+          Navegación
+        </h4>
+        <ul class="space-y-2 text-sm text-slate-300">
+          {footerLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="transition hover:text-brand-yellow hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-yellow rounded"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Columna 3: Información de Atención -->
+      <div class="md:col-span-4 space-y-3">
+        <h4 class="font-heading text-sm font-bold uppercase tracking-wider text-white">
+          Atención al Cliente
+        </h4>
+        <p class="text-sm text-slate-300">
+          <strong>Horario:</strong> {site.contact.businessHours}
+        </p>
+        <p class="text-sm text-slate-300">
+          <strong>Correo:</strong> <a href={`mailto:${site.contact.email}`} class="hover:underline">{site.contact.email}</a>
+        </p>
+        <p class="text-xs text-slate-400 italic pt-1">
+          * Para pedidos inmediatos, sugerimos utilizar los accesos directos de WhatsApp o llamada telefónica.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Barra Inferior de Copyright y Derechos -->
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <p>
+        &copy; {currentYear} {site.brand}. Todos los derechos reservados. Desarrollado por <span class="text-white font-semibold">Oquentra</span>.
+      </p>
+      <div class="flex items-center gap-4">
+        <a href="/privacidad" class="hover:text-slate-200 underline">
+          Privacidad
+        </a>
+        <span class="text-slate-600">|</span>
+        <span class="text-slate-400">
+          Chiclayo, Lambayeque — Perú
+        </span>
+      </div>
+    </div>
+
+  </div>
+</footer>

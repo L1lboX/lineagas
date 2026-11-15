@@ -1,0 +1,19 @@
+---
+interface Props {
+  className?: string;
+  size?: number | string;
+}
+
+const { className = "h-5 w-5", size = 20 } = Astro.props;
+---
+
+<img
+  src="/images/whatsapp.svg"
+  alt="WhatsApp"
+  aria-hidden="true"
+  class={`inline-block shrink-0 object-contain ${className}`}
+  width={size}
+  height={size}
+  loading="eager"
+  decoding="async"
+/>

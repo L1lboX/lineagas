@@ -1,0 +1,25 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Products from '../components/sections/Products.astro';
+import ConversionBanner from '../components/sections/ConversionBanner.astro';
+import Contact from '../components/sections/Contact.astro';
+---
+
+<MainLayout>
+  <!-- 1. Hero Principal (Inicio) -->
+  <Hero />
+
+  <!-- 2. Catálogo de Productos y Marcas (Inmediatamente después de Inicio) -->
+  <Products />
+
+  <!-- 4. Quiénes Somos / Sobre Nuestra Empresa -->
+  <About />
+
+  <!-- 5. Banda de Conversión Intermedia -->
+  <ConversionBanner />
+
+  <!-- 6. Información de Contacto, Cobertura y Mapa -->
+  <Contact />
+</MainLayout>

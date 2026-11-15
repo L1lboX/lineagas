@@ -1,0 +1,31 @@
+---
+interface Props {
+  variant?: 'dark' | 'light'; // 'dark' = para fondo claro (header), 'light' = para fondo oscuro (footer)
+  className?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { variant = 'dark', className = '', size = 'md' } = Astro.props;
+
+// logoClaro.png tiene las letras en azul marino para fondos claros (header)
+// logoOscuro.png tiene las letras en blanco para fondos oscuros (footer)
+const logoSrc = variant === 'light' ? '/images/logoOscuro.png' : '/images/logoClaro.png';
+const altText = "Línea Gas";
+
+// Tamaños balanceados y 100% compatibles con Tailwind estándar
+const sizeClasses = {
+  sm: 'h-10 sm:h-11',
+  md: 'h-12 sm:h-14', // Cabecera: 48px en móvil y 56px en pantallas medianas/grandes
+  lg: 'h-16 sm:h-20', // Footer: presencia corporativa amplia y clara
+}[size];
+---
+
+<div class={`inline-flex items-center select-none ${className}`}>
+  <img
+    src={logoSrc}
+    alt={altText}
+    class={`${sizeClasses} w-auto object-contain transition-transform duration-200 hover:scale-[1.02]`}
+    loading="eager"
+    decoding="async"
+  />
+</div>

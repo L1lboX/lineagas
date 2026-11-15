@@ -1,0 +1,452 @@
+---
+import WhatsAppIcon from '../common/WhatsAppIcon.astro';
+import { site } from '../../data/site';
+
+const { brands, contact } = site;
+const initialBrand = brands[0]; // Costagas por defecto
+---
+
+<section id="inicio" class="relative overflow-hidden pt-8 pb-14 lg:pt-14 lg:pb-20 bg-gradient-to-b from-white via-slate-50/60 to-white">
+  <!-- Fondos decorativos sutiles -->
+  <div class="absolute -right-32 -top-32 -z-10 h-96 w-96 rounded-full bg-orange-100/40 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute -left-32 top-1/2 -z-10 h-80 w-80 rounded-full bg-blue-100/40 blur-3xl" aria-hidden="true"></div>
+
+  <div class="mx-auto max-w-site px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8">
+      
+      <!-- Columna Izquierda: Mensaje y Propuesta de Valor -->
+      <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+        
+        <!-- Título H1 -->
+        <h1 class="font-heading text-3xl font-extrabold tracking-tight text-brand-navy sm:text-4xl lg:text-5xl lg:leading-[1.12]">
+          La energía que necesitas, <span class="text-brand-orange-dark">más cerca de ti.</span>
+        </h1>
+
+        <!-- Subtítulo -->
+        <p class="mx-auto max-w-xl text-base sm:text-lg text-content-muted lg:mx-0 leading-relaxed">
+          Pide tu balón en presentaciones de <strong>10 kg</strong> (Regular y Premium) o <strong>45 kg Industrial</strong> en tus marcas de confianza: <strong>Costagas, Solgas y Sipán Gas</strong>. Configura tu pedido en segundos con pesaje verificado y precinto de seguridad intacto.
+        </p>
+
+        <!-- Garantías de Confianza (Diseño Limpio sin cajas artificiales) -->
+        <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-xs font-semibold text-slate-700">
+          <div class="inline-flex items-center gap-1.5">
+            <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-100 text-brand-orange-dark text-[11px] font-black">✓</span>
+            <span>10 kg y 45 kg garantizados</span>
+          </div>
+          <span class="hidden sm:inline text-slate-300">•</span>
+          <div class="inline-flex items-center gap-1.5">
+            <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100 text-brand-navy text-[11px] font-black">✓</span>
+            <span>Precinto de seguridad intacto</span>
+          </div>
+          <span class="hidden sm:inline text-slate-300">•</span>
+          <div class="inline-flex items-center gap-1.5">
+            <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-black">✓</span>
+            <span>Despacho directo en Chiclayo</span>
+          </div>
+        </div>
+
+        <!-- Enlace al catálogo de especificaciones -->
+        <div class="pt-2">
+          <a
+            href="#productos"
+            class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-navy hover:text-brand-orange-dark transition"
+          >
+            <span>Ver fotos y especificaciones de balones de 10 kg y 45 kg</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Columna Derecha: Formulario Interactivo de Pedidos -->
+      <div class="lg:col-span-6 w-full">
+        <div class="relative mx-auto max-w-lg w-full">
+          
+          <!-- Tarjeta del Configurador -->
+          <div class="rounded-3xl bg-white p-4 sm:p-6 lg:p-7 shadow-2xl border border-slate-200/90 relative z-10 w-full">
+            
+            <!-- Encabezado de la Tarjeta -->
+            <div class="flex items-center justify-between pb-3.5 border-b border-slate-100">
+              <div>
+                <span class="text-[11px] font-black uppercase tracking-wider text-brand-orange-dark">
+                  Haz tu pedido directo
+                </span>
+                <h2 class="font-heading text-lg sm:text-xl font-extrabold text-brand-navy leading-tight">
+                  Configura tu Balón de Gas
+                </h2>
+              </div>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 border border-emerald-200">
+                <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Atención activa
+              </span>
+            </div>
+
+            <!-- 1. Selector de Marca (Costagas, Solgas, Sipán Gas) -->
+            <div class="mt-4">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                1. Selecciona la marca:
+              </label>
+              <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-2xl border border-slate-200">
+                {brands.map((brand, index) => {
+                  const isInitial = index === 0;
+                  return (
+                    <button
+                      type="button"
+                      data-brand-id={brand.id}
+                      class={`hero-brand-btn py-2 px-1.5 sm:px-2 rounded-xl text-xs sm:text-[13px] font-heading font-extrabold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange-dark text-center truncate ${
+                        isInitial
+                          ? "bg-brand-navy text-white shadow-md active-brand hover:text-white"
+                          : "text-slate-600 hover:text-brand-navy hover:bg-white/80"
+                      }`}
+                    >
+                      {brand.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <!-- 2. Visualización Dinámica del Balón y Presentación (Compacto y Optimizado) -->
+            <div class="mt-3.5 grid grid-cols-12 gap-3 sm:gap-3.5 items-center bg-surface-soft p-3 sm:p-3.5 rounded-2xl border border-slate-200/80">
+              
+              <!-- Imagen del Balón -->
+              <div class="col-span-5 flex flex-col items-center justify-center">
+                <div class="relative w-full max-w-[115px] sm:max-w-[135px] aspect-square rounded-2xl overflow-hidden p-2 bg-white border border-slate-200 flex items-center justify-center shadow-xs">
+                  <div id="hero-image-container" class="relative z-10 w-full h-full flex items-center justify-center transition-all duration-300">
+                    <img
+                      id="hero-product-img"
+                      src={initialBrand.image}
+                      alt={`${initialBrand.name} Balón 10 kg`}
+                      class="w-auto h-auto max-h-[88%] max-w-[88%] object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Selector de Presentación en Botones Compactos -->
+              <div class="col-span-7 space-y-1.5">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span id="hero-tier-badge" class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-brand-navy border border-blue-200 transition-all duration-300">
+                    LÍNEA REGULAR
+                  </span>
+                  <span id="hero-capacity-badge" class="rounded-full bg-slate-200/80 px-2 py-0.5 text-[10px] font-bold text-slate-700">
+                    10 kg
+                  </span>
+                </div>
+
+                <p id="hero-product-title" class="font-heading text-xs sm:text-sm font-extrabold text-brand-navy leading-tight truncate">
+                  {initialBrand.products.regular.name}
+                </p>
+
+                <!-- Botones Optimizados: Regular y Premium lado a lado para no ocupar tanto espacio vertical -->
+                <div id="hero-tiers-container" class="space-y-1.5 pt-0.5">
+                  <!-- Fila 1: Presentaciones 10 kg (Regular y Premium compactos) -->
+                  <div class="grid grid-cols-2 gap-1.5">
+                    <button
+                      type="button"
+                      id="hero-tier-regular-btn"
+                      class="hero-tier-btn w-full flex items-center justify-center rounded-xl py-1.5 sm:py-2 px-2 border-2 border-brand-navy bg-brand-navy text-white hover:text-white text-xs font-bold transition-all shadow-xs text-center"
+                      data-tier="regular"
+                    >
+                      10 kg Regular
+                    </button>
+
+                    <button
+                      type="button"
+                      id="hero-tier-premium-btn"
+                      class="hero-tier-btn w-full flex items-center justify-center rounded-xl py-1.5 sm:py-2 px-2 border-2 border-slate-200 bg-white text-slate-700 hover:text-brand-navy text-xs font-bold hover:border-slate-300 transition-all text-center"
+                      data-tier="premium"
+                    >
+                      10 kg Premium
+                    </button>
+                  </div>
+
+                  <!-- Fila 2: 45 kg Industrial (solo Costagas y Solgas) -->
+                  <button
+                    type="button"
+                    id="hero-tier-45-btn"
+                    class="hero-tier-btn w-full flex items-center justify-center rounded-xl py-1.5 sm:py-2 px-3 border-2 border-slate-200 bg-white text-slate-700 hover:text-brand-navy text-xs font-bold hover:border-slate-300 transition-all text-center"
+                    data-tier="industrial45"
+                  >
+                    45 kg Industrial
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 3. Cantidad y Dirección de entrega (Totalmente Responsivo) -->
+            <div class="mt-3.5 grid grid-cols-1 sm:grid-cols-12 gap-2.5 sm:gap-3">
+              
+              <!-- Selector de Cantidad -->
+              <div class="sm:col-span-4">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                  Cantidad:
+                </label>
+                <div class="flex items-center justify-between sm:justify-center rounded-xl border border-slate-300 bg-slate-50 p-1 w-full max-w-[200px] sm:max-w-none">
+                  <button
+                    type="button"
+                    id="hero-qty-minus"
+                    class="h-8 w-8 rounded-lg bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center active:scale-95 transition"
+                    aria-label="Disminuir cantidad"
+                  >
+                    -
+                  </button>
+                  <span id="hero-qty-display" class="flex-1 text-center font-heading font-extrabold text-sm text-brand-navy px-2">
+                    1
+                  </span>
+                  <button
+                    type="button"
+                    id="hero-qty-plus"
+                    class="h-8 w-8 rounded-lg bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-100 flex items-center justify-center active:scale-95 transition"
+                    aria-label="Aumentar cantidad"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <!-- Dirección de entrega -->
+              <div class="sm:col-span-8">
+                <label for="hero-order-address" class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                  Dirección o referencia:
+                </label>
+                <input
+                  type="text"
+                  id="hero-order-address"
+                  placeholder="Ej. Urb. Santa Victoria, Calle..."
+                  class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy h-[42px]"
+                />
+              </div>
+
+            </div>
+
+            <!-- 4. Botón de Pedido por WhatsApp -->
+            <div class="mt-4">
+              <button
+                type="button"
+                id="hero-submit-order"
+                class="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#2ee020] via-[#25c818] to-[#1ea812] py-3.5 px-5 text-center text-sm sm:text-base font-extrabold text-white shadow-lg shadow-emerald-900/15 hover:brightness-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <WhatsAppIcon className="h-5 w-5" size={22} />
+                <span>Pedir por WhatsApp</span>
+              </button>
+              <p class="text-center text-[10px] text-slate-500 mt-2">
+                Coordinación rápida y pago contra entrega o transferencia.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Script Interactivo del Formulario en el Hero -->
+<script define:vars={{ brandsData: brands, whatsappBase: contact.whatsappNumber }}>
+  let currentBrand = brandsData[0];
+  let currentTier = 'regular'; // 'regular' | 'premium' | 'industrial45'
+  let currentQty = 1;
+
+  const brandButtons = document.querySelectorAll('.hero-brand-btn');
+  const tierRegularBtn = document.getElementById('hero-tier-regular-btn');
+  const tierPremiumBtn = document.getElementById('hero-tier-premium-btn');
+  const tier45Btn = document.getElementById('hero-tier-45-btn');
+  const tierBadge = document.getElementById('hero-tier-badge');
+  const capacityBadge = document.getElementById('hero-capacity-badge');
+  const productTitle = document.getElementById('hero-product-title');
+  const productImg = document.getElementById('hero-product-img');
+  const imageContainer = document.getElementById('hero-image-container');
+  const qtyDisplay = document.getElementById('hero-qty-display');
+  const qtyMinus = document.getElementById('hero-qty-minus');
+  const qtyPlus = document.getElementById('hero-qty-plus');
+  const addressInput = document.getElementById('hero-order-address');
+  const orderButton = document.getElementById('hero-submit-order');
+
+  function updateUI() {
+    // Si la marca no tiene 45kg y estaba seleccionado industrial45, regresar a regular
+    if (currentTier === 'industrial45' && !currentBrand.has45kg) {
+      currentTier = 'regular';
+    }
+
+    const is45 = currentTier === 'industrial45';
+    const isPremium = currentTier === 'premium';
+    const isRegular = currentTier === 'regular';
+
+    // Mostrar el botón 45 kg solo si la marca lo tiene (Costagas y Solgas). Ocultarlo en Sipán Gas
+    if (tier45Btn) {
+      if (currentBrand.has45kg) {
+        tier45Btn.classList.remove('hidden');
+      } else {
+        tier45Btn.classList.add('hidden');
+      }
+    }
+
+    // 1. Título y Producto
+    let currentProductName = '';
+    let currentProductImage = currentBrand.image;
+
+    if (is45 && currentBrand.products.industrial45) {
+      currentProductName = currentBrand.products.industrial45.name;
+      currentProductImage = currentBrand.image45 || currentBrand.products.industrial45.image;
+    } else if (isPremium) {
+      currentProductName = currentBrand.products.premium.name;
+      currentProductImage = currentBrand.image;
+    } else {
+      currentProductName = currentBrand.products.regular.name;
+      currentProductImage = currentBrand.image;
+    }
+
+    if (productTitle) productTitle.textContent = currentProductName;
+
+    // 2. Badges: Limpio, corporativo y sin degradados extraños
+    if (tierBadge && capacityBadge) {
+      const cleanBadgeClass = 'inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-0.5 text-[10px] font-bold text-brand-navy border border-blue-200 transition-all duration-300';
+      
+      if (is45) {
+        tierBadge.textContent = 'LÍNEA INDUSTRIAL';
+        tierBadge.className = cleanBadgeClass;
+        capacityBadge.textContent = '45 kg';
+      } else if (isPremium) {
+        tierBadge.textContent = '★ LÍNEA PREMIUM';
+        tierBadge.className = cleanBadgeClass;
+        capacityBadge.textContent = '10 kg';
+      } else {
+        tierBadge.textContent = 'LÍNEA REGULAR';
+        tierBadge.className = cleanBadgeClass;
+        capacityBadge.textContent = '10 kg';
+      }
+    }
+
+    // 3. Imagen del producto
+    if (productImg) {
+      productImg.src = currentProductImage;
+      productImg.alt = currentProductName;
+      productImg.style.filter = 'drop-shadow(0 3px 6px rgba(0, 0, 0, 0.14))';
+    }
+
+    if (imageContainer) {
+      imageContainer.style.transform = 'scale(0.96)';
+      imageContainer.style.opacity = '0.75';
+      setTimeout(() => {
+        imageContainer.style.transform = 'scale(1.0)';
+        imageContainer.style.opacity = '1';
+      }, 90);
+    }
+
+    // 4. Estilos de los botones de presentación (Active = Navy, Inactive = Blanco con borde sutil)
+    const activeClass = 'hero-tier-btn w-full flex items-center justify-center rounded-xl py-1.5 sm:py-2 px-2 border-2 border-brand-navy bg-brand-navy text-white hover:text-white text-xs font-bold transition-all shadow-xs text-center';
+    const inactiveClass = 'hero-tier-btn w-full flex items-center justify-center rounded-xl py-1.5 sm:py-2 px-2 border-2 border-slate-200 bg-white text-slate-700 hover:text-brand-navy hover:border-slate-300 text-xs font-bold transition-all text-center';
+
+    if (tierRegularBtn) {
+      tierRegularBtn.className = isRegular ? activeClass : inactiveClass;
+    }
+
+    if (tierPremiumBtn) {
+      tierPremiumBtn.className = isPremium ? activeClass : inactiveClass;
+    }
+
+    if (tier45Btn) {
+      const has45 = Boolean(currentBrand.has45kg);
+      tier45Btn.className = `${is45 ? activeClass : inactiveClass} ${has45 ? '' : 'hidden'}`;
+      tier45Btn.style.display = has45 ? 'flex' : 'none';
+    }
+  }
+
+  // Eventos de selección de marca (Costagas, Solgas, Sipán Gas)
+  brandButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const brandId = btn.getAttribute('data-brand-id');
+      const found = brandsData.find((b) => b.id === brandId);
+      if (found) {
+        currentBrand = found;
+        brandButtons.forEach((b) => {
+          const isCurrent = b === btn;
+          if (isCurrent) {
+            b.classList.add('bg-brand-navy', 'text-white', 'shadow-md', 'active-brand', 'hover:text-white');
+            b.classList.remove('text-slate-600', 'hover:text-brand-navy', 'hover:bg-white/80');
+          } else {
+            b.classList.remove('bg-brand-navy', 'text-white', 'shadow-md', 'active-brand', 'hover:text-white');
+            b.classList.add('text-slate-600', 'hover:text-brand-navy', 'hover:bg-white/80');
+          }
+        });
+        updateUI();
+      }
+    });
+  });
+
+  // Alternar presentaciones
+  tierRegularBtn?.addEventListener('click', () => {
+    currentTier = 'regular';
+    updateUI();
+  });
+
+  tierPremiumBtn?.addEventListener('click', () => {
+    currentTier = 'premium';
+    updateUI();
+  });
+
+  tier45Btn?.addEventListener('click', () => {
+    if (currentBrand.has45kg) {
+      currentTier = 'industrial45';
+      updateUI();
+    }
+  });
+
+  // Selector de cantidad
+  qtyMinus?.addEventListener('click', () => {
+    if (currentQty > 1) {
+      currentQty--;
+      if (qtyDisplay) qtyDisplay.textContent = String(currentQty);
+    }
+  });
+
+  qtyPlus?.addEventListener('click', () => {
+    if (currentQty < 10) {
+      currentQty++;
+      if (qtyDisplay) qtyDisplay.textContent = String(currentQty);
+    }
+  });
+
+  // Enviar pedido a WhatsApp
+  orderButton?.addEventListener('click', () => {
+    const address = addressInput?.value.trim() || '';
+    const plural = currentQty > 1 ? 'balones' : 'balón';
+    let presentationName = '';
+
+    if (currentTier === 'industrial45') {
+      presentationName = `45 kg Industrial de ${currentBrand.name}`;
+    } else if (currentTier === 'premium') {
+      presentationName = `10 kg Premium de ${currentBrand.name}`;
+    } else {
+      presentationName = `10 kg Regular de ${currentBrand.name}`;
+    }
+
+    let message = `Hola Línea Gas, deseo realizar un pedido de:\n- Producto: ${currentQty} ${plural} de ${presentationName}`;
+    if (address) {
+      message += `\n- Dirección de entrega: ${address}`;
+    } else {
+      message += `\n- Por favor indíquenme precio y tiempo estimado de entrega.`;
+    }
+
+    const cleanNum = whatsappBase ? whatsappBase.replace(/\D/g, '') : '';
+    if (cleanNum) {
+      const waUrl = `https://wa.me/${cleanNum}?text=${encodeURIComponent(message)}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      window.dispatchEvent(new CustomEvent('open-demo-dialog', {
+        detail: {
+          message: message,
+          context: `Pedido configurado para <strong>${currentQty} ${plural} de ${presentationName}</strong>.`
+        }
+      }));
+    }
+  });
+</script>
