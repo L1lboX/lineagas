@@ -429,7 +429,7 @@ const initialBrand = brands[0]; // Costagas por defecto
       presentationName = `10 kg Regular de ${currentBrand.name}`;
     }
 
-    let message = `Hola Línea Gas, deseo realizar un pedido de:\n- Producto: ${currentQty} ${plural} de ${presentationName}`;
+    let message = `Hola Línea Gas, deseo realizar un pedido de:\n ${currentQty} ${plural} de ${presentationName}`;
     if (address) {
       message += `\n- Dirección de entrega: ${address}`;
     } else {

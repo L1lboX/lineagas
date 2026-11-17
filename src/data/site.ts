@@ -39,7 +39,7 @@ export const site = {
   contact: {
     whatsappNumber: "927089151", // Número para el pedido
     phoneNumber: "074 603063",
-    email: "contacto@lineagas.pe",
+    email: "lineagassac@gmail.com",
     address: "Ubicación sujeta a confirmación oficial",
     businessHours: "Lunes a Domingo: 7:00 am - 8:00 pm",
     mapEmbedUrl: "",
