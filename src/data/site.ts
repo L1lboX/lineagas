@@ -18,6 +18,8 @@ export interface GasBrand {
   image: string;
   has45kg?: boolean;
   image45?: string;
+  hasValve?: boolean;
+  imageValve?: string;
   products: {
     regular: GasProduct;
     premium: GasProduct;
@@ -35,8 +37,8 @@ export const site = {
     ogImage: "/images/og-preview.png",
   },
   contact: {
-    whatsappNumber: "51987654321", // Número para el pedido
-    phoneNumber: "(01) 613-3333",
+    whatsappNumber: "927089151", // Número para el pedido
+    phoneNumber: "074 603063",
     email: "contacto@lineagas.pe",
     address: "Ubicación sujeta a confirmación oficial",
     businessHours: "Lunes a Domingo: 7:00 am - 8:00 pm",
@@ -56,6 +58,8 @@ export const site = {
       image: "/images/products/costaGas.png",
       has45kg: true,
       image45: "/images/products/costaGas45.png",
+      hasValve: true,
+      imageValve: "/images/products/valvulaPrmCosta.png",
       products: {
         regular: {
           id: "costagas-10kg-regular",
@@ -100,6 +104,8 @@ export const site = {
       image: "/images/products/solGas.png",
       has45kg: true,
       image45: "/images/products/solGas45.png",
+      hasValve: true,
+      imageValve: "/images/products/valvulaSolgas.png",
       products: {
         regular: {
           id: "solgas-10kg-regular",
