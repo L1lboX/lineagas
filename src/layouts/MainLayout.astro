@@ -4,28 +4,114 @@ import Footer from '../components/layout/Footer.astro';
 import DemoModal from '../components/ui/DemoModal.astro';
 import FloatingContact from '../components/ui/FloatingContact.astro';
 import { site } from '../data/site';
+import chiclayoDistricts from '../data/chiclayo_districts.json';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  robots?: string;
+  canonical?: string;
 }
 
 const {
   title = site.seo.title,
   description = site.seo.description,
+  image = site.seo.ogImage,
+  robots = "index, follow",
+  canonical,
 } = Astro.props;
 
-// Schema LocalBusiness estructurado (sin inventar coordenadas ni datos falsos)
-const structuredData = {
-  "@context": "https://schema.org",
+// Construcción de URLs dinámicas para Canonical, Open Graph y Schemas
+const siteUrl = Astro.site ? Astro.site.origin : (site.seo.siteUrl || "https://lineagascix.com");
+const canonicalURL = canonical 
+  ? new URL(canonical, siteUrl) 
+  : new URL(Astro.url.pathname, siteUrl);
+const socialImageURL = new URL(image, siteUrl).href;
+
+// Distritos con cobertura confirmada desde chiclayo_districts.json
+const coveredDistricts = chiclayoDistricts
+  .filter((district) => district.hasCoverage)
+  .map((district) => district.name);
+
+const areaServed = [
+  {
+    "@type": "AdministrativeArea",
+    "name": "Provincia de Chiclayo, Lambayeque, Perú",
+  },
+  ...coveredDistricts.map((name) => ({
+    "@type": "City",
+    "name": name,
+    "addressRegion": "Lambayeque",
+    "addressCountry": "PE",
+  })),
+];
+
+// Schema LocalBusiness enriquecido para SEO Local
+const localBusinessSchema = {
   "@type": "LocalBusiness",
+  "@id": `${siteUrl}/#localbusiness`,
   "name": site.brand,
   "description": description,
-  "telephone": site.contact.phoneNumber || undefined,
+  "url": siteUrl,
+  "telephone": site.contact.phoneNumber ? `+51 ${site.contact.phoneNumber}` : (site.contact.whatsappNumber ? `+51 ${site.contact.whatsappNumber}` : undefined),
   "email": site.contact.email,
-  "openingHours": site.contact.businessHours !== "Lunes a Domingo: Horario por confirmar" ? site.contact.businessHours : undefined,
   "priceRange": "$$",
+  "image": socialImageURL,
+  "logo": `${siteUrl}/images/logoClaro.webp`,
+  "openingHours": site.contact.businessHours !== "Lunes a Domingo: Horario por confirmar" ? site.contact.businessHours : "Mo-Su 07:00-20:00",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": site.contact.address !== "Ubicación sujeta a confirmación oficial" ? site.contact.address : "Chiclayo",
+    "addressLocality": site.contact.addressLocality,
+    "addressRegion": site.contact.addressRegion,
+    "postalCode": site.contact.postalCode,
+    "addressCountry": site.contact.addressCountry,
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": site.contact.geo.latitude,
+    "longitude": site.contact.geo.longitude,
+  },
+  "areaServed": areaServed,
+  "sameAs": site.contact.socialLinks.filter((s) => s.url).map((s) => s.url),
+};
+
+// Schemas de tipo Product para los balones de gas (Rich Snippets en Google)
+const productSchemas = site.brands.flatMap((brand) => {
+  const productsList = [brand.products.regular, brand.products.premium];
+  if (brand.products.industrial45) {
+    productsList.push(brand.products.industrial45);
+  }
+
+  return productsList.map((product) => ({
+    "@type": "Product",
+    "@id": `${siteUrl}/#product-${product.id}`,
+    "name": product.name,
+    "description": product.description,
+    "image": `${siteUrl}${product.image}`,
+    "category": "Balones de Gas GLP",
+    "brand": {
+      "@type": "Brand",
+      "name": brand.name,
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "PEN",
+      "availability": "https://schema.org/InStock",
+      "url": `${siteUrl}/#productos`,
+      "seller": {
+        "@id": `${siteUrl}/#localbusiness`,
+      },
+    },
+  }));
+});
+
+// Grafo unificado de datos estructurados Schema.org
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [localBusinessSchema, ...productSchemas],
 };
 ---
 
@@ -36,19 +122,51 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={site.seo.keywords.join(', ')} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="noindex, nofollow" />
+    
+    <!-- Indexación y Rastreo -->
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalURL.href} />
 
-    <!-- Open Graph / Redes Sociales -->
+    <!-- Open Graph / Redes Sociales (Facebook, WhatsApp, LinkedIn) -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:site_name" content={site.brand} />
+    <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content="es_PE" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content={site.seo.twitterCard || "summary_large_image"} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
+
+    <!-- Verificación de Google Search Console -->
+    {site.analytics?.googleSearchConsoleVerification && (
+      <meta name="google-site-verification" content={site.analytics.googleSearchConsoleVerification} />
+    )}
+
+    <!-- Google Analytics 4 (GA4) -->
+    {site.analytics?.googleAnalyticsId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.analytics.googleAnalyticsId}`}></script>
+        <script is:inline define:vars={{ gaId: site.analytics.googleAnalyticsId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
 
     <!-- Favicon en SVG vectorial con la llama oficial -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%2311185C'/><path d='M16 4C16 4 20 10 20 14C20 15.5 19.5 17 18.5 18C20 16.5 24 16.5 24 22C24 27 19.5 30 15 30C10 30 7 26 7 21C7 15 13 9 16 4Z' fill='%23F5660A'/><path d='M15 15C15 15 17 18 17 21C17 23 15.5 25 14 25C12.5 25 11 23 11 20C11 17 13.5 15.5 15 15Z' fill='%23F4A20E'/></svg>" />
 
-    <!-- Schema.org JSON-LD -->
+    <!-- Schema.org JSON-LD (LocalBusiness + Products) -->
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="min-h-screen flex flex-col bg-white text-content antialiased overflow-x-hidden">

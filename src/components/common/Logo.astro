@@ -3,13 +3,13 @@ interface Props {
   variant?: 'dark' | 'light'; // 'dark' = para fondo claro (header), 'light' = para fondo oscuro (footer)
   className?: string;
   size?: 'sm' | 'md' | 'lg';
+  loading?: 'eager' | 'lazy';
 }
 
-const { variant = 'dark', className = '', size = 'md' } = Astro.props;
+const { variant = 'dark', className = '', size = 'md', loading = 'eager' } = Astro.props;
 
-// logoClaro.png tiene las letras en azul marino para fondos claros (header)
-// logoOscuro.png tiene las letras en blanco para fondos oscuros (footer)
-const logoSrc = variant === 'light' ? '/images/logoOscuro.png' : '/images/logoClaro.png';
+// Versiones WebP de alta fidelidad y máxima compresión
+const logoSrc = variant === 'light' ? '/images/logoOscuro.webp' : '/images/logoClaro.webp';
 const altText = "Línea Gas";
 
 // Tamaños balanceados y 100% compatibles con Tailwind estándar
@@ -25,7 +25,9 @@ const sizeClasses = {
     src={logoSrc}
     alt={altText}
     class={`${sizeClasses} w-auto object-contain transition-transform duration-200 hover:scale-[1.02]`}
-    loading="eager"
+    loading={loading}
     decoding="async"
+    width="220"
+    height="64"
   />
 </div>

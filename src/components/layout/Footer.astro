@@ -1,15 +1,18 @@
 ---
 import Logo from '../common/Logo.astro';
-import { site } from '../../data/site';
+import { site, getGmailUrl, getMailtoUrl } from '../../data/site';
 
 const currentYear = new Date().getFullYear();
 const footerLinks = [
   { label: 'Inicio', href: '#inicio' },
-  { label: 'Productos', href: '#productos' },
   { label: 'Quiénes somos', href: '#nosotros' },
+  { label: 'Productos', href: '#productos' },
   { label: 'Contacto', href: '#contacto' },
   { label: 'Política de privacidad', href: '/privacidad' },
 ];
+const defaultSubject = "Consulta sobre pedido de gas - Línea Gas";
+const mailtoUrl = getMailtoUrl(defaultSubject);
+const gmailUrl = getGmailUrl(defaultSubject);
 ---
 
 <footer class="bg-brand-navy text-white pt-16 pb-12 border-t-4 border-brand-orange-dark">
@@ -19,9 +22,9 @@ const footerLinks = [
       
       <!-- Columna 1: Logo, Resumen y Redes Sociales -->
       <div class="md:col-span-5 space-y-4">
-        <Logo variant="light" size="lg" />
+        <Logo variant="light" size="lg" loading="lazy" />
         <p class="text-sm text-slate-300 max-w-sm leading-relaxed">
-          {site.brand}: Información comercial, variedad de marcas y atención directa para el suministro de gas envasado en presentaciones de 10 kg y 45 kg.
+          {site.brand}: Distribución autorizada de balones de gas a domicilio en Chiclayo y distritos de Lambayeque. Presentaciones de 10 kg y 45 kg con pesaje exacto garantizado.
         </p>
 
         <!-- Redes Sociales Oficiales -->
@@ -67,10 +70,19 @@ const footerLinks = [
           Atención al Cliente
         </h4>
         <p class="text-sm text-slate-300">
+          <strong>Cobertura:</strong> Chiclayo y distritos de Lambayeque
+        </p>
+        <p class="text-sm text-slate-300">
           <strong>Horario:</strong> {site.contact.businessHours}
         </p>
         <p class="text-sm text-slate-300">
-          <strong>Correo:</strong> <a href={`mailto:${site.contact.email}`} class="hover:underline">{site.contact.email}</a>
+          <strong>Correo:</strong> <a
+            href={mailtoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:underline text-white font-medium cursor-pointer"
+            title="Enviar correo a Línea Gas"
+          >{site.contact.email}</a>
         </p>
         <p class="text-xs text-slate-400 italic pt-1">
           * Para pedidos inmediatos, sugerimos utilizar los accesos directos de WhatsApp o llamada telefónica.
@@ -97,3 +109,16 @@ const footerLinks = [
 
   </div>
 </footer>
+
+<script>
+  // En navegadores como Firefox y Zen, target="_blank" en enlaces mailto: suele ser ignorado
+  // por el manejador de protocolos. Este listener fuerza la apertura en una pestaña nueva
+  // sin perder ni reemplazar la landing page actual.
+  document.addEventListener('click', (e) => {
+    const link = (e.target as HTMLElement)?.closest('a[href^="mailto:"]') as HTMLAnchorElement | null;
+    if (link) {
+      e.preventDefault();
+      window.open(link.href, '_blank', 'noopener,noreferrer');
+    }
+  });
+</script>

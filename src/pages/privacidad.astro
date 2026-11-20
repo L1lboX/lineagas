@@ -1,6 +1,10 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { site } from '../data/site';
+import { site, getGmailUrl, getMailtoUrl } from '../data/site';
+
+const privacySubject = "Solicitud de Datos Personales / Privacidad";
+const privacyMailto = getMailtoUrl(privacySubject);
+const privacyGmail = getGmailUrl(privacySubject);
 ---
 
 <MainLayout
@@ -64,7 +68,13 @@ import { site } from '../data/site';
             4. Canales para Ejercicio de Derechos ARCO
           </h2>
           <p>
-            Cualquier usuario podrá solicitar el acceso, rectificación, cancelación u oposición al tratamiento de sus datos escribiendo al correo oficial: <a href={`mailto:${site.contact.email}`} class="text-brand-navy font-bold underline">{site.contact.email}</a>.
+            Cualquier usuario podrá solicitar el acceso, rectificación, cancelación u oposición al tratamiento de sus datos escribiendo al correo oficial: <a
+              href={privacyMailto}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-brand-navy font-bold underline cursor-pointer"
+              title="Enviar correo de privacidad"
+            >{site.contact.email}</a>.
           </p>
         </div>
 
