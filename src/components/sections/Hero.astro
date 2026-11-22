@@ -17,6 +17,12 @@ const initialBrand = brands[0]; // Costagas por defecto
       <!-- Columna Izquierda: Título H1 e Ilustración del Motorizado -->
       <div class="lg:col-span-6 space-y-4 sm:space-y-5 text-center lg:text-left flex flex-col justify-center items-center lg:items-start">
         
+        <!-- Pastilla de Alcance de Servicio -->
+        <div class="inline-flex items-center gap-2 rounded-full bg-orange-50 border border-orange-200/90 px-3.5 py-1 text-xs font-bold text-brand-orange-dark shadow-2xs">
+          <span class="h-2 w-2 rounded-full bg-brand-orange"></span>
+          <span>Delivery a Domicilio • Venta por Mayor y Menor</span>
+        </div>
+
         <!-- Título H1 -->
         <h1 class="font-heading text-3xl font-extrabold tracking-tight text-brand-navy sm:text-4xl lg:text-5xl lg:leading-[1.12]">
           Tu balón de gas a domicilio en Chiclayo, <span class="text-brand-orange-dark">rápido y seguro.</span>
@@ -28,8 +34,8 @@ const initialBrand = brands[0]; // Costagas por defecto
             src="/images/repartidor_moto_orange.webp"
             alt="Motorizado repartidor de balón de gas a domicilio en Chiclayo - Línea Gas"
             class="w-full max-w-[320px] sm:max-w-[390px] lg:max-w-[440px] h-auto object-contain drop-shadow-md select-none transition-transform hover:scale-[1.02] duration-300"
-            width="950"
-            height="789"
+            width="866"
+            height="747"
             loading="eager"
             decoding="async"
           />
@@ -88,21 +94,19 @@ const initialBrand = brands[0]; // Costagas por defecto
             <!-- 2. Visualización Dinámica del Balón y Presentación (Compacto y Optimizado) -->
             <div class="mt-3.5 grid grid-cols-12 gap-3 sm:gap-3.5 items-center bg-surface-soft p-3 sm:p-3.5 rounded-2xl border border-slate-200/80">
               
-              <!-- Imagen del Balón -->
-              <div class="col-span-5 flex flex-col items-center justify-center">
-                <div class="relative w-full max-w-[125px] sm:max-w-[145px] aspect-square rounded-2xl overflow-hidden p-1.5 bg-white border border-slate-200 flex items-center justify-center shadow-xs">
-                  <div id="hero-image-container" class="relative z-10 w-full h-full flex items-center justify-center transition-all duration-300">
-                    <img
-                      id="hero-product-img"
-                      src={initialBrand.image}
-                      alt={`${initialBrand.name} Balón 10 kg`}
-                      class="w-auto h-auto max-h-[94%] max-w-[94%] object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
-                      loading="eager"
-                      decoding="async"
-                      width="145"
-                      height="145"
-                    />
-                  </div>
+              <!-- Imagen del Balón (sin contenedor blanco, mayor escala e impacto visual) -->
+              <div class="col-span-5 flex flex-col items-center justify-center py-1">
+                <div id="hero-image-container" class="relative z-10 w-full flex items-center justify-center transition-all duration-300">
+                  <img
+                    id="hero-product-img"
+                    src={initialBrand.image}
+                    alt={`${initialBrand.name} Balón 10 kg`}
+                    class="w-auto h-auto max-h-[145px] sm:max-h-[165px] object-contain drop-shadow-md transition-transform duration-300 hover:scale-105 select-none"
+                    loading="eager"
+                    decoding="async"
+                    width="155"
+                    height="165"
+                  />
                 </div>
               </div>
 
@@ -212,11 +216,8 @@ const initialBrand = brands[0]; // Costagas por defecto
                 class="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#2ee020] via-[#25c818] to-[#1ea812] py-3.5 px-5 text-center text-sm sm:text-base font-extrabold text-white shadow-lg shadow-emerald-900/15 hover:brightness-105 active:scale-95 transition-all cursor-pointer"
               >
                 <WhatsAppIcon className="h-5 w-5" size={22} />
-                <span>Pedir por WhatsApp</span>
+                <span>Pedir Delivery por WhatsApp</span>
               </button>
-              <p class="text-center text-[10px] text-slate-500 mt-2">
-                Coordinación rápida y pago contra entrega o transferencia.
-              </p>
             </div>
 
           </div>
@@ -294,7 +295,7 @@ const initialBrand = brands[0]; // Costagas por defecto
         tierBadge.className = cleanBadgeClass;
         capacityBadge.textContent = '45 kg';
       } else if (isPremium) {
-        tierBadge.textContent = '★ LÍNEA PREMIUM';
+        tierBadge.textContent = 'LÍNEA PREMIUM';
         tierBadge.className = cleanBadgeClass;
         capacityBadge.textContent = '10 kg';
       } else {

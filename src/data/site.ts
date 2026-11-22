@@ -53,12 +53,12 @@ export const site = {
     ],
   },
   analytics: {
-    googleAnalyticsId: "", // Inserta aquí tu ID de medición GA4, ej: "G-XXXXXXXXXX"
-    googleSearchConsoleVerification: "", // Inserta aquí el código del tag meta de Google Search Console, ej: "abc123xyz..."
+    googleAnalyticsId: "G-BTFFNLDRZR", // Inserta aquí tu ID de medición GA4, ej: "G-XXXXXXXXXX"
+    googleSearchConsoleVerification: "8wuJxTyjG1uoQmbqYO9BVfZynWtSbTBWGAO64Vix658", // Inserta aquí el código del tag meta de Google Search Console, ej: "abc123xyz..."
   },
   contact: {
     whatsappNumber: "927089151", // Número para el pedido
-    phoneNumber: "074 603063",
+    phoneNumber: "074 603053",
     email: "lineagassac@gmail.com",
     address: "Ubicación sujeta a confirmación oficial",
     addressLocality: "Chiclayo",

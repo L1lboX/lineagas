@@ -2,7 +2,7 @@
 import WhatsAppIcon from '../common/WhatsAppIcon.astro';
 import { site, getWhatsAppUrl } from '../../data/site';
 
-const bannerMsg = `Hola ${site.brand}, tengo dudas sobre qué presentación de gas elegir. ¿Me pueden asesorar?`;
+const bannerMsg = `Hola ${site.brand}, deseo consultar por pedidos para mi hogar o cotizaciones al por mayor para mi negocio.`;
 const bannerWhatsAppUrl = getWhatsAppUrl(bannerMsg);
 ---
 
@@ -11,12 +11,12 @@ const bannerWhatsAppUrl = getWhatsAppUrl(bannerMsg);
   <div class="absolute -right-16 -bottom-16 h-48 w-48 rounded-full bg-gradient-to-tr from-brand-orange to-brand-yellow opacity-20 blur-2xl pointer-events-none" aria-hidden="true"></div>
 
   <div class="mx-auto max-w-site flex flex-col md:flex-row items-center justify-between gap-6">
-    <div class="text-center md:text-left space-y-1">
+    <div class="text-center md:text-left space-y-1.5">
       <h2 class="font-heading text-2xl font-extrabold sm:text-3xl text-white">
-        ¿Tienes dudas sobre qué presentación necesitas?
+        ¿Compras para tu hogar o necesitas pedidos al por mayor?
       </h2>
-      <p class="text-slate-300 text-sm sm:text-base">
-        Escríbenos directamente y nuestro equipo te asesorará con la mejor opción para tu hogar o negocio.
+      <p class="text-slate-300 text-sm sm:text-base max-w-2xl">
+        Atendemos pedidos a domicilio para familias y abastecimiento comercial para restaurantes, comercios y distribuidores con entrega programada.
       </p>
     </div>
 
@@ -29,17 +29,17 @@ const bannerWhatsAppUrl = getWhatsAppUrl(bannerMsg);
           class="inline-flex w-full md:w-auto items-center justify-center gap-2.5 rounded-btn bg-gradient-to-r from-[#2ee020] via-[#25c818] to-[#1ea812] px-7 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-emerald-950/20 hover:brightness-105 transition active:scale-95"
         >
           <WhatsAppIcon className="h-5 w-5" size={20} />
-          Hablar por WhatsApp
+          Cotizar por WhatsApp
         </a>
       ) : (
         <button
           type="button"
           class="btn-demo-action inline-flex w-full md:w-auto items-center justify-center gap-2.5 rounded-btn bg-gradient-to-r from-[#2ee020] via-[#25c818] to-[#1ea812] px-7 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-emerald-950/20 hover:brightness-105 transition active:scale-95"
           data-msg={bannerMsg}
-          data-context="Asesoría directa sobre marcas y presentaciones de gas."
+          data-context="Cotizaciones para el hogar y pedidos al por mayor."
         >
           <WhatsAppIcon className="h-5 w-5" size={20} />
-          Hablar por WhatsApp
+          Cotizar por WhatsApp
         </button>
       )}
     </div>
