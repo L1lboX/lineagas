@@ -11,16 +11,10 @@ const navLinks = [
     subtext: 'Configurador de pedidos y catálogo directo',
   },
   { 
-    label: 'Quiénes somos', 
-    href: '#nosotros', 
-    id: 'nosotros',
-    subtext: 'Nuestra trayectoria, misión y valores',
-  },
-  { 
     label: 'Productos', 
     href: '#productos', 
     id: 'productos',
-    subtext: 'Balones de 10 kg y 45 kg con especificaciones',
+    subtext: 'Balones de 10 kg, 45 kg y kits de seguridad',
   },
   { 
     label: 'Contacto', 
@@ -28,18 +22,24 @@ const navLinks = [
     id: 'contacto',
     subtext: 'Zonas de cobertura en Chiclayo y distritos',
   },
+  { 
+    label: 'Quiénes somos', 
+    href: '#nosotros', 
+    id: 'nosotros',
+    subtext: 'Nuestra trayectoria, misión y valores',
+  },
 ];
 
 const headerWhatsAppUrl = getWhatsAppUrl(`Hola ${site.brand}, deseo pedir gas.`);
 const phoneTel = getPhoneTel();
 ---
 
-<!-- Cabecera Principal -->
+<!-- Cabecera Principal Fija Unificada y Moderna -->
 <header
   id="main-header"
-  class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md transition-all duration-300 border-b border-transparent"
+  class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300 shadow-xs"
 >
-  <div class="mx-auto flex h-20 max-w-site items-center justify-between px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto flex h-18 sm:h-20 max-w-site items-center justify-between px-4 sm:px-6 lg:px-8">
     
     <!-- Logotipo Oficial Línea Gas -->
     <a href="#inicio" class="flex items-center gap-2 rounded-xl py-1 focus-visible:ring-2 focus-visible:ring-brand-orange-dark transition" aria-label="Ir al inicio de Línea Gas">
@@ -47,7 +47,7 @@ const phoneTel = getPhoneTel();
     </a>
 
     <!-- Navegación de Escritorio: Cápsula Flotante Moderna con Indicador Activo y Efecto Pill -->
-    <nav class="hidden md:flex items-center gap-5 lg:gap-8" aria-label="Navegación principal">
+    <nav class="hidden md:flex items-center gap-4 lg:gap-6" aria-label="Navegación principal">
       
       <!-- Cápsula Segmentada de Navegación -->
       <div class="flex items-center p-1.5 rounded-full bg-slate-100/90 border border-slate-200/90 shadow-2xs backdrop-blur-sm">
@@ -80,6 +80,21 @@ const phoneTel = getPhoneTel();
           })}
         </ul>
       </div>
+
+      <!-- Teléfono de Central Directo en Cabecera (Visible en pantallas medianas y grandes) -->
+      {phoneTel && (
+        <a
+          href={phoneTel}
+          class="hidden lg:inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-brand-navy transition px-2 py-1 rounded-lg hover:bg-slate-100"
+          title="Llamar a central de pedidos"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-orange-dark shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          <span class="text-slate-500 font-medium">Central:</span>
+          <span class="text-brand-navy">{site.contact.phoneNumber}</span>
+        </a>
+      )}
 
       <!-- Botón CTA Pedir Gas (Verde Oficial WhatsApp) -->
       {headerWhatsAppUrl ? (
@@ -314,7 +329,7 @@ const phoneTel = getPhoneTel();
   });
 
   // IntersectionObserver para seguir el scroll con precisión
-  const sectionIds = ['inicio', 'nosotros', 'productos', 'contacto'];
+  const sectionIds = ['inicio', 'productos', 'contacto', 'nosotros'];
   const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
 
   if ('IntersectionObserver' in window && sections.length > 0) {

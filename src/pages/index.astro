@@ -1,25 +1,25 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import Hero from '../components/sections/Hero.astro';
-import About from '../components/sections/About.astro';
 import Products from '../components/sections/Products.astro';
-import ConversionBanner from '../components/sections/ConversionBanner.astro';
 import Contact from '../components/sections/Contact.astro';
+import ConversionBanner from '../components/sections/ConversionBanner.astro';
+import About from '../components/sections/About.astro';
 ---
 
 <MainLayout>
-  <!-- 1. Hero Principal (Inicio) -->
+  <!-- 1. Hero Principal (Configurador y Atención Inmediata) -->
   <Hero />
 
-  <!-- 2. Quiénes Somos / Sobre Nuestra Empresa -->
-  <About />
-
-  <!-- 3. Catálogo de Productos y Marcas -->
+  <!-- 2. Catálogo de Impacto (Tarjetas 10kg, 45kg y Kits) -->
   <Products />
 
-  <!-- 4. Banda de Conversión Intermedia -->
+  <!-- 3. Contacto, Cobertura en Chiclayo y Canales Directos (Flujo de Conversión Inmediato) -->
+  <Contact />
+
+  <!-- 4. Banda de Conversión Intermedia (Hogares y Negocios al por Mayor) -->
   <ConversionBanner />
 
-  <!-- 5. Información de Contacto, Cobertura y Mapa -->
-  <Contact />
+  <!-- 5. Sección Institucional (Sobre Nosotros, Historia y Valores al Final) -->
+  <About />
 </MainLayout>
